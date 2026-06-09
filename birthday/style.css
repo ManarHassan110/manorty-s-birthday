@@ -1,0 +1,253 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --rose: #d4537e;
+  --rose-light: #f7c0d1;
+  --blush: #faedf3;
+  --petal: #f0b8cc;
+  --gold: #c9a86c;
+  --cream: #fdf8f5;
+  --deep: #3b1a28;
+  --muted: #9c6f82;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  background: var(--cream);
+  font-family: 'Jost', sans-serif;
+}
+
+/* ── Canvas ── */
+#petal-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Page sections ── */
+.page {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1.5rem;
+}
+
+/* ── Hero ── */
+#hero { text-align: center; }
+
+.hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 300;
+  margin-bottom: 2rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 1s 0.3s forwards;
+}
+
+.hero-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(64px, 14vw, 120px);
+  font-weight: 300;
+  color: var(--rose);
+  line-height: 1;
+  letter-spacing: -1px;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 1.2s 0.6s forwards;
+}
+
+.hero-heart {
+  display: block;
+  font-size: clamp(28px, 5vw, 42px);
+  margin: 1rem 0 1.5rem;
+  opacity: 0;
+  animation: fadeUp 1s 1s forwards, heartbeat 2.5s 2s ease-in-out infinite;
+}
+
+.hero-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(16px, 3vw, 22px);
+  color: var(--muted);
+  font-weight: 300;
+  letter-spacing: 1px;
+  opacity: 0;
+  animation: fadeUp 1s 1.2s forwards;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+  animation: fadeUp 1s 2s forwards;
+}
+
+.scroll-hint span {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+.scroll-hint .arrow {
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(to bottom, var(--rose-light), transparent);
+  animation: scrollPulse 1.8s ease-in-out infinite;
+}
+
+/* ── Message ── */
+#message { max-width: 680px; text-align: center; width: 100%; }
+
+.section-label {
+  font-size: 10px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 300;
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s, transform 0.8s;
+}
+
+.message-body {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(20px, 3.5vw, 30px);
+  line-height: 1.9;
+  color: var(--deep);
+  font-weight: 300;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 1s 0.2s, transform 1s 0.2s;
+}
+
+.message-body em {
+  color: var(--rose);
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* ── Wish card ── */
+#wish {
+  max-width: 560px;
+  text-align: center;
+  background: var(--blush);
+  border-radius: 32px;
+  border: 1px solid var(--rose-light);
+  padding: 3.5rem 3rem;
+}
+
+.wish-icon {
+  font-size: 44px;
+  display: block;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.wish-icon.in-view {
+  animation: popIn 0.6s 0.2s forwards;
+}
+
+.wish-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(22px, 4vw, 32px);
+  font-weight: 600;
+  color: var(--rose);
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.9s 0.3s, transform 0.9s 0.3s;
+}
+
+.wish-detail {
+  font-size: 15px;
+  color: var(--muted);
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  line-height: 1.8;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.9s 0.5s, transform 0.9s 0.5s;
+}
+
+/* ── Divider ── */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 3rem 0;
+  opacity: 0;
+  transition: opacity 0.8s;
+}
+
+.divider-line { flex: 1; height: 0.5px; background: var(--rose-light); }
+.divider-dot  { width: 6px; height: 6px; border-radius: 50%; background: var(--petal); }
+
+/* ── In-view (triggered by JS) ── */
+.in-view {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ── Footer ── */
+#footer { min-height: auto; padding: 2rem 1.5rem 4rem; }
+
+.footer-text {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--petal);
+  font-weight: 300;
+  text-align: center;
+}
+
+/* ── Keyframes ── */
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  15%       { transform: scale(1.18); }
+  30%       { transform: scale(1); }
+  45%       { transform: scale(1.1); }
+  60%       { transform: scale(1); }
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50%       { opacity: 1;   transform: scaleY(1.15); }
+}
+
+@keyframes popIn {
+  0%   { opacity: 0; transform: scale(0.8); }
+  70%  { opacity: 1; transform: scale(1.15); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .hero-eyebrow, .hero-name, .hero-heart, .hero-sub, .scroll-hint { opacity: 1; transform: none; }
+}
